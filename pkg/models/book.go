@@ -47,3 +47,24 @@ func GetAllBooks() ([]Book, error) {
 	}
 	return books, nil
 }
+
+// GetBookById returns the book with the given ID, or nil if not found.
+func GetBookById(id string) (*Book, error) {
+	var book Book
+	if err := db.First(&book, id).Error; err != nil {
+		return nil, err
+	}
+	return &book, nil
+}
+
+// DeleteBookById removes the book with the given ID and returns its data.
+func DeleteBookById(id string) (Book, error) {
+	var book Book
+	if err := db.First(&book, id).Error; err != nil {
+		return Book{}, err
+	}
+	if err := db.Delete(&Book{}, id).Error; err != nil {
+		return Book{}, err
+	}
+	return book, nil
+}

@@ -68,3 +68,18 @@ func DeleteBookById(id string) (Book, error) {
 	}
 	return book, nil
 }
+
+// UpdateBookById applies a Bookify payload to the book with the given ID
+// and returns the updated record.
+func UpdateBookById(id string, payload Bookify) (*Book, error) {
+	var book Book
+	if err := db.First(&book, id).Error; err != nil {
+		return nil, err
+	}
+	book.Isbn = payload.Isbn
+	book.Title = payload.Title
+	if err := db.Save(&book).Error; err != nil {
+		return nil, err
+	}
+	return &book, nil
+}

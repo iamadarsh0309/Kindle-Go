@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gorilla/mux"
 	"github.com/iamadarsh0309/Kindle-Go/pkg/routes"
 
@@ -10,8 +12,13 @@ import (
 )
 
 func main() {
+	addr := os.Getenv("ADDR")
+	if addr == "" {
+		addr = "localhost:9010"
+	}
+
 	r := mux.NewRouter()
 	routes.RegisterBookStoreRoutes(r)
 	http.Handle("/", r)
-	log.Fatal(http.ListenAndServe("localhost:9010", r))
+	log.Fatal(http.ListenAndServe(addr, r))
 }

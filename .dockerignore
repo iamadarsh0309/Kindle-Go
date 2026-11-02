@@ -1,0 +1,5 @@
+.git
+.env
+AGENTS.md
+docker-compose.yml
+*.md
